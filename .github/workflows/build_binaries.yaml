@@ -26,7 +26,7 @@ jobs:
           export QMK_HOME="$GITHUB_WORKSPACE/qmk_firmware"
           echo "QMK_HOME=$QMK_HOME" >> "$GITHUB_ENV"
           echo "QMK_USERSPACE=$GITHUB_WORKSPACE/qmk_userspace" >> "$GITHUB_ENV"
-          git -C "$QMK_HOME" submodule update --init --depth 1 lib/chibios lib/chibios-contrib lib/printf
+          git -C "$QMK_HOME" submodule update --init --depth 1 lib/chibios lib/chibios-contrib lib/lufa lib/printf
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends build-essential clang gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi libhidapi-hidraw0 python3-venv
           python3 -m venv "$RUNNER_TEMP/venv"

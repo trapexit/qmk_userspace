@@ -14,7 +14,7 @@ git clone https://github.com/trapexit/qmk_userspace.git
 cd qmk_userspace
 export QMK_HOME="$(realpath ../qmk_firmware)"
 export QMK_USERSPACE="$PWD"
-git -C "$QMK_HOME" submodule update --init --depth 1 lib/chibios lib/chibios-contrib lib/printf
+git -C "$QMK_HOME" submodule update --init --depth 1 lib/chibios lib/chibios-contrib lib/lufa lib/printf
 ```
 
 On Ubuntu 24.04, install the host compiler, ARM toolchain and QMK CLI:
