@@ -2,6 +2,8 @@
 
 `shinobi` is a VIA-enabled keymap for the **TEX Shura** with the older Shinobi BLE4 add-on. It does not target the Shinobi keyboard. Caps Lock becomes Left Ctrl. Hold the middle button for H/J/K/L arrows, A/E Home/End, and comma/period/slash for Bluetooth slots 1, 2 and 3. The other build target, `default`, uses the firmware tree's stock layout and BLE5 driver.
 
+To configure `shinobi` in VIA before its definition is distributed, enable **Show Design tab** in VIA's settings, then load the [Shura v3 definition](https://raw.githubusercontent.com/trapexit/keyboards/tex-shura/v3/tex/shura/shura.json) from the Design tab. The diagram omits JIS-specific switches and the physical Bluetooth Pair switch; hold the middle button and use comma, period or slash to select a host on this keymap. For the default layout with VIA instead, see the separate [VIA keymap branch](https://github.com/trapexit/qmk_userspace_via/tree/tex-shura/keyboards/tex/shura/keymaps/via).
+
 ## Build from a clean checkout
 
 Use two sibling checkouts. The keyboard and both Bluetooth drivers come from the public [tex-shura firmware branch](https://github.com/trapexit/qmk_firmware/tree/tex-shura/keyboards/tex/shura). Do not copy keymaps into that tree.
