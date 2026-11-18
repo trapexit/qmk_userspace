@@ -1,8 +1,8 @@
 # TEX Shura QMK userspace
 
-`shinobi` is a VIA-enabled keymap for the **TEX Shura** with the older Shinobi BLE4 add-on. It does not target the Shinobi keyboard. Caps Lock becomes Left Ctrl. Hold the middle button for H/J/K/L arrows, A/E Home/End, and comma/period/slash for Bluetooth slots 1, 2 and 3. The other build target, `default`, uses the firmware tree's stock layout and BLE5 driver.
+`trapexit` is a personal, VIA-enabled keymap for the **TEX Shura** with the optional BLE4 module. Caps Lock becomes Left Ctrl. Hold the middle button for H/J/K/L arrows, A/E Home/End, and comma/period/slash for Bluetooth slots 1, 2 and 3. The `default` keymap also targets the Shura; it uses the stock layout and BLE5 driver.
 
-To configure `shinobi` in VIA before its definition is distributed, enable **Show Design tab** in VIA's settings, then load the [Shura v3 definition](https://raw.githubusercontent.com/trapexit/keyboards/tex-shura/v3/tex/shura/shura.json) from the Design tab. The diagram omits JIS-specific switches and the physical Bluetooth Pair switch; hold the middle button and use comma, period or slash to select a host on this keymap. For the default layout with VIA instead, see the separate [VIA keymap branch](https://github.com/trapexit/qmk_userspace_via/tree/tex-shura/keyboards/tex/shura/keymaps/via).
+To configure `trapexit` in VIA before its definition is distributed, enable **Show Design tab** in VIA's settings, then load the [Shura v3 definition](https://raw.githubusercontent.com/trapexit/keyboards/tex-shura/v3/tex/shura/shura.json) from the Design tab. The diagram omits JIS-specific switches and the physical Bluetooth Pair switch. For the default layout with VIA instead, see the separate [VIA keymap branch](https://github.com/trapexit/qmk_userspace_via/tree/tex-shura/keyboards/tex/shura/keymaps/via).
 
 ## Build from a clean checkout
 
@@ -31,11 +31,11 @@ Lint the board and both keymaps, run the native Fn and BLE4 regression tests, th
 
 ```sh
 qmk lint -kb tex/shura -km default
-qmk lint -kb tex/shura -km shinobi
+qmk lint -kb tex/shura -km trapexit
 python -m unittest discover -s tests -p 'test_shura_qmk_*.py' -v
 qmk userspace-compile -j 2 --print-failures
 ```
 
-The matching pairs are `$QMK_HOME/.build/tex_shura_default.{elf,bin}` and `$QMK_HOME/.build/tex_shura_shinobi.{elf,bin}`. The [build workflow](https://github.com/trapexit/qmk_userspace/actions/workflows/build_binaries.yaml) also compares each BIN with a fresh binary conversion of its ELF before packaging the pair as a downloadable artifact. Keep files from the same keymap and run together. These host tests and builds do not flash or exercise hardware.
+The matching pairs are `$QMK_HOME/.build/tex_shura_default.{elf,bin}` and `$QMK_HOME/.build/tex_shura_trapexit.{elf,bin}`. The [build workflow](https://github.com/trapexit/qmk_userspace/actions/workflows/build_binaries.yaml) also compares each BIN with a fresh binary conversion of its ELF before packaging the pair as a downloadable artifact. Keep files from the same keymap and run together. These host tests and builds do not flash or exercise hardware.
 
 Based on the [QMK external userspace template](https://github.com/qmk/qmk_userspace/tree/940d6f5678f042cd5291c228a7142fb28b55cb34).

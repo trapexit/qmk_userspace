@@ -2,6 +2,6 @@
     "userspace_version": "1.1",
     "build_targets": [
         ["tex/shura", "default"],
-        ["tex/shura", "shinobi"]
+        ["tex/shura", "trapexit"]
     ]
 }

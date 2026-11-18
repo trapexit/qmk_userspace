@@ -37,7 +37,7 @@ jobs:
         working-directory: qmk_userspace
         run: |
           qmk lint -kb tex/shura -km default
-          qmk lint -kb tex/shura -km shinobi
+          qmk lint -kb tex/shura -km trapexit
 
       - name: Run host Fn and BLE4 tests
         working-directory: qmk_userspace
@@ -49,7 +49,7 @@ jobs:
 
       - name: Collect and check matching pairs
         run: |
-          for keymap in default shinobi; do
+          for keymap in default trapexit; do
             stem="tex_shura_$keymap"
             src="$QMK_HOME/.build/$stem"
             dest="artifacts/$keymap"
@@ -67,6 +67,6 @@ jobs:
 
       - uses: actions/upload-artifact@v7
         with:
-          name: tex-shura-shinobi
-          path: artifacts/shinobi/
+          name: tex-shura-trapexit
+          path: artifacts/trapexit/
           if-no-files-found: error
