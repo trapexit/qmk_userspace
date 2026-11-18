@@ -1,0 +1,21 @@
+# Junk files
+*.bak
+*.swp
+*~
+.DS_Store
+._*
+
+# Firmware files
+*.hex
+*.bin
+*.uf2
+*.elf
+/build/
+/tmp/
+__pycache__/
+.venv/
+
+# clangd
+compile_commands.json
+.clangd/
+.cache/

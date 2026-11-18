@@ -1,0 +1,72 @@
+name: TEX Shura
+
+on: [push, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          path: qmk_userspace
+          persist-credentials: false
+
+      - uses: actions/checkout@v7
+        with:
+          repository: trapexit/qmk_firmware
+          ref: tex-shura
+          path: qmk_firmware
+          persist-credentials: false
+
+      - name: Set up QMK and host test tools
+        run: |
+          export QMK_HOME="$GITHUB_WORKSPACE/qmk_firmware"
+          echo "QMK_HOME=$QMK_HOME" >> "$GITHUB_ENV"
+          echo "QMK_USERSPACE=$GITHUB_WORKSPACE/qmk_userspace" >> "$GITHUB_ENV"
+          git -C "$QMK_HOME" submodule update --init --depth 1 lib/chibios lib/chibios-contrib lib/printf
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends build-essential clang gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi libhidapi-hidraw0 python3-venv
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/python" -m pip install 'qmk==1.2.0' -r "$QMK_HOME/requirements.txt"
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+
+      - name: Lint board and keymaps
+        working-directory: qmk_userspace
+        run: |
+          qmk lint -kb tex/shura -km default
+          qmk lint -kb tex/shura -km shinobi
+
+      - name: Run host Fn and BLE4 tests
+        working-directory: qmk_userspace
+        run: python -m unittest discover -s tests -p 'test_shura_qmk_*.py' -v
+
+      - name: Build manifest targets
+        working-directory: qmk_userspace
+        run: qmk userspace-compile -j 2 --print-failures
+
+      - name: Collect and check matching pairs
+        run: |
+          for keymap in default shinobi; do
+            stem="tex_shura_$keymap"
+            src="$QMK_HOME/.build/$stem"
+            dest="artifacts/$keymap"
+            mkdir -p "$dest"
+            cp "$src.elf" "$src.bin" "$dest/"
+            arm-none-eabi-objcopy -O binary "$dest/$stem.elf" "$RUNNER_TEMP/$stem.bin"
+            cmp "$RUNNER_TEMP/$stem.bin" "$dest/$stem.bin"
+          done
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: tex-shura-default
+          path: artifacts/default/
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: tex-shura-shinobi
+          path: artifacts/shinobi/
+          if-no-files-found: error
